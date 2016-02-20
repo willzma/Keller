@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="willzma.com.keller.LearnActivity"
+    android:orientation="vertical">
+
+    <LinearLayout android:layout_height="0dp"
+                  android:layout_width="match_parent"
+                  android:layout_weight="1"
+                  android:orientation="horizontal">
+        <Button android:id="@+id/button00"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+                />
+
+        <Button android:id="@+id/button01"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="0dp"
+                  android:layout_width="match_parent"
+                  android:layout_weight="1"
+                  android:orientation="horizontal">
+        <Button android:id="@+id/button10"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+            />
+
+        <Button android:id="@+id/button11"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="0dp"
+                  android:layout_width="match_parent"
+                  android:layout_weight="1"
+                  android:orientation="horizontal">
+        <Button android:id="@+id/button20"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+            />
+
+        <Button android:id="@+id/button21"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
