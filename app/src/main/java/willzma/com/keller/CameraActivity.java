@@ -1,7 +1,14 @@
 package willzma.com.keller;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +19,17 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
@@ -43,10 +60,75 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         previewHolder.addCallback(surfaceCallback);
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
+        try {
+            File newdir = new File(new URI(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Iris").getPath());
+            newdir.mkdirs();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
 
-        OCR o = new OCR();
-        o.parseImage(null);
+        Button takePicture = (Button) findViewById(R.id.takePicture);
+        takePicture.setOnClickListener(new View.OnClickListener() {
 
+
+            private Camera.PictureCallback getJpegCallback() {
+                Camera.PictureCallback jpeg = new Camera.PictureCallback() {
+                    @Override
+                    public void onPictureTaken(byte[] data, Camera camera) {
+                        FileOutputStream fos;
+
+                        byte[] data2 = data.clone();
+
+                        Bitmap bmp = BitmapFactory.decodeByteArray(data2, 0, data2.length);
+
+                        Matrix matrix = new Matrix();
+                        matrix.postRotate(90);
+
+                        Bitmap bmp2 = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+
+                        ByteArrayOutputStream stm = new ByteArrayOutputStream();
+                        bmp2.compress(Bitmap.CompressFormat.JPEG, 50, stm);
+
+                        byte[] byteMe = stm.toByteArray();
+
+                        try {
+                            File imageFile = new File(new URI(Environment.getExternalStorageDirectory().toString() + "/Pictures/Iris/" + "Iris" + count + ".jpg").getPath());
+                            fos = new FileOutputStream(imageFile);
+
+                            fos.write(byteMe);
+                            fos.close();
+                            mediaScan(imageFile);
+                            System.out.println("FILE SAVED!!! GOGOGOGO");
+                            File f = new File(new URI(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                                    .getAbsolutePath() + "/Iris/Iris" + (count) + ".jpg").getPath());
+
+                            OCR o = new OCR();
+                            System.out.println("TAGGEDLOL" + o.parseImage(f));
+
+                        } catch (IOException e) {
+                            //do something about it
+                        } catch (URISyntaxException e1) {
+
+                        }
+                    }
+                };
+                return jpeg;
+            }
+
+            public void onClick(View v) {
+
+                try {
+                    camera.takePicture(null, null, getJpegCallback());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                count++;
+
+
+            }
+        });
     }
 
     @Override
@@ -55,6 +137,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
+
         camera=Camera.open();
 
         Camera.Parameters params = camera.getParameters();
@@ -151,6 +234,38 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         }
 
         return(result);
+    }
+
+    private static File getOutputMediaFile() {
+        File mediaStorageDir = new File(
+                Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                "Iris");
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d("Iris", "failed to create directory");
+                return null;
+            }
+        }
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+                .format(new Date());
+        File mediaFile;
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                + "IMG_" + timeStamp + ".jpg");
+
+        return mediaFile;
+    }
+
+    public void mediaScan(File file) {
+        MediaScannerConnection.scanFile(this,
+                new String[]{file.toString()}, null,
+                new MediaScannerConnection.OnScanCompletedListener() {
+                    public void onScanCompleted(String path, Uri uri) {
+                        Log.i("ExternalStorage", "Scanned " + path + ":");
+                        Log.i("ExternalStorage", "-> uri=" + uri);
+                    }
+                });
     }
 
     @Override
