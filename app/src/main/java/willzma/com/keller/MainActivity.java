@@ -1,5 +1,6 @@
 package willzma.com.keller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,9 +12,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+
+import com.firebase.client.Firebase;
 
 public class MainActivity extends AppCompatActivity {
 
+    final Context CONTEXT = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -31,10 +36,11 @@ public class MainActivity extends AppCompatActivity {
         });
         (findViewById(R.id.buttonCamera)).setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View arg0) {
-
+                new TTS(CONTEXT, false).execute("CAMERA");
                 return true;
             }
         });
+        Firebase.setAndroidContext(this);
     }
 
     @Override
