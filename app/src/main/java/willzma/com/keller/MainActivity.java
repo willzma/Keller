@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Firebase.setAndroidContext(this);
 
         (findViewById(R.id.buttonCamera)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -40,7 +41,19 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        Firebase.setAndroidContext(this);
+        (findViewById(R.id.buttonMyBraille)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                Intent myIntent = new Intent(MainActivity.this,
+                        MyBrailleActivity.class);
+                startActivity(myIntent);
+            }
+        });
+        (findViewById(R.id.buttonCamera)).setOnLongClickListener(new View.OnLongClickListener() {
+            public boolean onLongClick(View arg0) {
+                new TTS(CONTEXT, false).execute("My Braille");
+                return true;
+            }
+        });
     }
 
     @Override

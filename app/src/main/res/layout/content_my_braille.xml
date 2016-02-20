@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="willzma.com.keller.MyBrailleActivity"
+    tools:showIn="@layout/activity_my_braille">
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/listFooter"
+        android:layout_alignParentTop="true"
+        android:transcriptMode="alwaysScroll" />
+
+    <LinearLayout
+        android:id="@+id/listFooter"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="learn">
+
+        <TextView
+            android:id="@+id/english"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:gravity="left"
+            android:layout_weight="1"
+            android:layout_marginRight="30dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:id="@+id/ascii"
+            android:layout_marginLeft="30dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:gravity="right"
+            android:layout_weight="1"
+            android:paddingRight="30dp"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+</RelativeLayout>
