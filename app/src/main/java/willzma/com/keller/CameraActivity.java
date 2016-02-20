@@ -44,6 +44,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
 
+        OCR o = new OCR();
+        o.parseImage(null);
+
     }
 
     @Override
