@@ -102,8 +102,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                             File f = new File(new URI(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
                                     .getAbsolutePath() + "/Iris/Iris" + (count) + ".jpg").getPath());
 
-                            OCR o = new OCR();
-                            System.out.println("TAGGEDLOL" + o.parseImage(f));
+
 
                         } catch (IOException e) {
                             //do something about it

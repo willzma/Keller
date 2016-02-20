@@ -25,27 +25,24 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.firebase:firebase-client-android:2.5.1+'
-    compile files('src/main/res/libs/commons-beanutils-1.9.2.jar')
-    compile files('src/main/res/libs/commons-io-2.4.jar')
+    compile files('src/main/res/libs/commons-codec-1.9.jar')
     compile files('src/main/res/libs/commons-logging-1.2.jar')
-    compile files('src/main/res/libs/ghost4j-1.0.0.jar')
-    compile files('src/main/res/libs/itext-2.1.7.jar')
-    compile files('src/main/res/libs/jai_imageio.jar')
-    compile files('src/main/res/libs/jna.jar')
-    compile files('src/main/res/libs/jul-to-slf4j-1.7.13.jar')
-    compile files('src/main/res/libs/lept4j-1.0.1.jar')
-    compile files('src/main/res/libs/log4j-1.2.17.jar')
-    compile files('src/main/res/libs/logback-classic-1.1.3.jar')
-    compile files('src/main/res/libs/logback-core-1.1.3.jar')
-    compile files('src/main/res/libs/rococoa-core-0.5.jar')
-    compile files('src/main/res/libs/slf4j-api-1.7.13.jar')
-    compile files('src/main/res/libs/tess4j-3.0.jar')
-    compile files('src/main/res/libs/xmlgraphics-commons-1.5.jar')
+    compile files('src/main/res/libs/fluent-hc-4.5.1.jar')
+    compile files('src/main/res/libs/httpclient-4.5.1.jar')
+    compile files('src/main/res/libs/httpclient-cache-4.5.1.jar')
+    compile files('src/main/res/libs/httpclient-win-4.5.1.jar')
+    compile files('src/main/res/libs/httpcore-4.4.3.jar')
+    compile files('src/main/res/libs/httpmime-4.5.1.jar')
+    compile files('src/main/res/libs/jna-4.1.0.jar')
+    compile files('src/main/res/libs/jna-platform-4.1.0.jar')
 }
 android {
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/DEPENDENCIES'
     }
 }
