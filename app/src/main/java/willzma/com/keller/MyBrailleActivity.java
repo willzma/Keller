@@ -27,7 +27,9 @@ import com.firebase.client.ValueEventListener;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.SearchManager;
@@ -121,16 +123,6 @@ public class MyBrailleActivity extends ListActivity {
             startActivity(myIntent);
         }
     }
-    public void checkVoiceRecognition() {
-        // Check if voice recognition is present
-        PackageManager pm = getPackageManager();
-        List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(
-                RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
-        if (activities.size() == 0) {
-            Toast.makeText(this, "Voice recognizer not present",
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
 
     public void speak(View view) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -139,7 +131,7 @@ public class MyBrailleActivity extends ListActivity {
                 .getPackage().getName());
 
         // Display an hint to the user about what he should say.
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Text");
+        //intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak a word or phrase to ");
         // Given an hint to the recognizer about what the user is going to say
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -155,6 +147,9 @@ public class MyBrailleActivity extends ListActivity {
             if(resultCode == RESULT_OK) {
                 ArrayList<String> textMatchList = data
                         .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                Map<String, String> push = new HashMap<String, String>();
+                push.put("english", textMatchList.get(0));
+                mFirebaseRef.push().setValue(push);
                 //Result code for various error.
             }else if(resultCode == RecognizerIntent.RESULT_AUDIO_ERROR){
                 showToastMessage("Audio Error");
