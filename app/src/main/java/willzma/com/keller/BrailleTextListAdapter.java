@@ -6,6 +6,7 @@ package willzma.com.keller;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,8 +31,35 @@ public class BrailleTextListAdapter extends FirebaseListAdapter<BrailleText> {
     @Override
     protected void populateView(View view, BrailleText brailleText) {
         // Map a BrailleText object to an entry in our listview
+        Typeface typeface=Typeface.createFromAsset(view.getContext().getAssets(),"braille.ttf");
         ((TextView) view.findViewById(R.id.english)).setText(brailleText.getEnglish());
-        ((TextView) view.findViewById(R.id.ascii)).setText(brailleText.getAscii());
-
+        ((TextView) view.findViewById(R.id.ascii)).setTypeface(typeface);
+        ((TextView) view.findViewById(R.id.ascii)).setText(fullBraille(brailleText.getEnglish()));
+    }
+    public String fullBraille(String english) {
+        boolean isNum = false;
+        String result = "";
+        for(int i = 0; i < english.length(); i++) {
+            if(Character.isDigit(english.charAt(i))) {
+                if(!isNum) {
+                    isNum = true;
+                    result += "#"+english.charAt(i);
+                } else {
+                    result+=english.charAt(i);
+                }
+            } else {
+                if(isNum) {
+                    isNum = false;
+                    if(english.charAt(i) == ' ') {
+                        result+= ";"+english.charAt(i);
+                    } else {
+                        result+= "; "+english.charAt(i);
+                    }
+                } else {
+                    result+=english.charAt(i);
+                }
+            }
+        }
+        return result;
     }
 }

@@ -21,15 +21,15 @@ public class LearnActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent in = getIntent();
-        char vibraille = in.getCharExtra();
+        //char vibraille = in.getCharExtra();
 
         vib = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         dots = new Button[3][2];
 
-        boolean[][] enabledButtons = determineEnabledButtons(vibraille);
-        negateMatrix(enabledButtons, buttonsTouched);
+        //boolean[][] enabledButtons = determineEnabledButtons(vibraille);
+       // negateMatrix(enabledButtons, buttonsTouched);
 
-        generateButtons(enabledButtons);
+       // generateButtons(enabledButtons);
 
         setContentView(R.layout.activity_learn);
     }

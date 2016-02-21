@@ -1,7 +1,9 @@
 package willzma.com.keller;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.DataSetObserver;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -91,5 +93,13 @@ public class MyBrailleActivity extends ListActivity {
     public void learn(View v) {
         ((TextView)v.findViewById(R.id.english)).getText().toString();
         ((TextView)v.findViewById(R.id.ascii)).getText().toString();
+        Intent myIntent = new Intent(MyBrailleActivity.this, LearnActivity.class);
+        if(!((((TextView) v.findViewById(R.id.english)).getText().toString()).trim() == "")) {
+            myIntent.putExtra("braille", ((TextView)v.findViewById(R.id.ascii)).getText().toString());
+            myIntent.putExtra("english", ((TextView) v.findViewById(R.id.english)).getText().toString());
+            myIntent.putExtra("current", ((TextView)v.findViewById(R.id.ascii)).getText().toString().charAt(0));
+            myIntent.putExtra("next", ((TextView)v.findViewById(R.id.ascii)).getText().toString().charAt(1));
+            startActivity(myIntent);
+        }
     }
 }
