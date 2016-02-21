@@ -119,10 +119,11 @@ public class MyBrailleActivity extends ListActivity {
         ((TextView)v.findViewById(R.id.ascii)).getText().toString();
         Intent myIntent = new Intent(MyBrailleActivity.this, LearnActivity.class);
         if(!((((TextView) v.findViewById(R.id.english)).getText().toString()).trim() == "")) {
-            myIntent.putExtra("braille", ((TextView)v.findViewById(R.id.ascii)).getText().toString().trim());
+
+            myIntent.putExtra("braille", (((TextView)v.findViewById(R.id.ascii)).getText().toString().trim().replaceAll(" ", "")));
             myIntent.putExtra("english", ((TextView) v.findViewById(R.id.english)).getText().toString().trim());
-            myIntent.putExtra("current", 0);
-            myIntent.putExtra("next", 1);
+            myIntent.putExtra("current", new Integer(0));
+            //myIntent.putExtra("next", 1);
             startActivity(myIntent);
         }
     }

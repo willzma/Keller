@@ -3,10 +3,12 @@ package willzma.com.keller;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -26,9 +28,10 @@ public class LearnActivity extends AppCompatActivity {
     private String braille;
     private String text;
     private int current;
-    private int next;
+    //private int next;
 
     private Rect[][] rekt;
+    private boolean[][] enabledButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,23 +40,30 @@ public class LearnActivity extends AppCompatActivity {
         Intent in = getIntent();
 
         current = in.getIntExtra("current", 0);
-        next = in.getIntExtra("next", 0);
+        //next = in.getIntExtra("next", 0);
         braille = in.getStringExtra("braille");
         text = in.getStringExtra("english");
         buttonsTouched = new boolean[3][2];
         rekt = new Rect[3][2];
 
+        enabledButtons = determineEnabledButtons(braille.charAt(current));
+        negateMatrix(enabledButtons, buttonsTouched);
+
+        System.out.println(braille);
+
         vib = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         dots = new Button[3][2];
 
-        boolean[][] enabledButtons = determineEnabledButtons(text.charAt(current));
-        negateMatrix(enabledButtons, buttonsTouched);
-
         setContentView(R.layout.activity_learn);
 
-        generateButtons(enabledButtons);
-
         lexLuthor = (LinearLayout) findViewById(R.id.lexLuthor);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        generateButtons(enabledButtons);
 
         lexLuthor.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -68,9 +78,9 @@ public class LearnActivity extends AppCompatActivity {
                         //int i = Integer.parseInt(s.substring(s.length() - 2, s.length() - 1));
                         //int j = Integer.parseInt(s.substring(s.length() - 1, s.length()));
 
-                        //System.out.println("meme supreme");
+                        System.out.println("meme supreme");
 
-                        //System.out.println(event.getX() + " and " + event.getY());
+                        System.out.println(event.getX() + " and " + event.getY());
 
                         for (int i = 0; i < rekt.length; i++) {
                             for (int j = 0; j < rekt[0].length; j++) {
@@ -92,13 +102,28 @@ public class LearnActivity extends AppCompatActivity {
                             buttonsTouched[temp[0]][temp[1]] = true;
 
                             if (readyToGo()) {
-                                Intent myIntent = new Intent(LearnActivity.this, LearnActivity.class);
 
-                                myIntent.putExtra("braille", braille);
-                                myIntent.putExtra("english", text);
-                                myIntent.putExtra("current", braille.charAt(current + 1));
-                                myIntent.putExtra("next", braille.charAt(next + 1));
-                                startActivity(myIntent);
+                                if (current == (braille.length() - 1)) {
+                                    Intent myIntent = new Intent(LearnActivity.this, MyBrailleActivity.class);
+
+                                    System.out.println("should be doing this");
+
+                                    startActivity(myIntent);
+
+                                    finish();
+                                } else {
+                                    Intent myIntent = new Intent(LearnActivity.this, LearnActivity.class);
+
+                                    System.out.println("should not be doing this");
+
+                                    myIntent.putExtra("braille", braille);
+                                    myIntent.putExtra("english", text);
+                                    myIntent.putExtra("current", current + 1);
+                                    //myIntent.putExtra("next", braille.charAt(next + 1));
+                                    startActivity(myIntent);
+
+                                    finish();
+                                }
                             }
                         }
                     }
@@ -168,6 +193,14 @@ public class LearnActivity extends AppCompatActivity {
     }
 
     private void generateButtons(boolean[][] bigButts) {
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        int width = size.x;
+        int height = size.y;
+
         for (int i = 0; i < bigButts.length; i++) {
             for (int j = 0; j < bigButts[0].length; j++) {
                 String buttonID = "button" + i + j;
@@ -176,53 +209,16 @@ public class LearnActivity extends AppCompatActivity {
                 if (bigButts[i][j]) {
                     dots[i][j] = (Button) findViewById(resID);
 
-                    System.out.println(dots[i][j].getLeft() + " and " + dots[i][j].getTop() +
-                            " and " + dots[i][j].getRight() + " and " + dots[i][j].getBottom());
+                    int centerX = (int)(((2 * j) + 1) * width * 0.25);
+                    int centerY = (int)(((i + 1) * height * 0.2)) + 65;
+                    int radius = height / 15;
 
-                    rekt[i][j] = new Rect(dots[i][j].getLeft(), dots[i][j].getTop(),
-                            dots[i][j].getRight(), dots[i][j].getBottom());
-
-                    /*dots[i][j].setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-
-                            switch(event.getAction()) {
-                                case MotionEvent.ACTION_UP: {
-
-                                }break;case MotionEvent.ACTION_DOWN: {
-                                    rect = new Rect(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
-                                }break;case MotionEvent.ACTION_MOVE: {
-                                    String s = getResources().getResourceName(v.getId());
-                                    int i = Integer.parseInt(s.substring(s.length() - 2, s.length() - 1));
-                                    int j = Integer.parseInt(s.substring(s.length() - 1, s.length()));
-
-                                    if(!rect.contains(v.getLeft() + (int) event.getX(), v.getTop() + (int) event.getY())){
-                                        vibrate(v);
-
-                                        buttonsTouched[i][j] = true;
-
-                                        if (readyToGo()) {
-                                            Intent myIntent = new Intent(LearnActivity.this, LearnActivity.class);
-
-                                            myIntent.putExtra("braille", braille);
-                                            myIntent.putExtra("english", text);
-                                            myIntent.putExtra("current", braille.charAt(current + 1));
-                                            myIntent.putExtra("next", braille.charAt(next + 1));
-                                            startActivity(myIntent);
-                                        }
-
-                                    }
-                                }
-                            }
-
-                            return true;
-                        }
-                    });*/
+                    rekt[i][j] = new Rect(centerX - radius, centerY - radius,
+                            centerX + radius, centerY + radius);
                 } else {
                     dots[i][j] = (Button) findViewById(resID);
 
-                    rekt[i][j] = new Rect(dots[i][j].getLeft(), dots[i][j].getTop(),
-                            dots[i][j].getRight(), dots[i][j].getBottom());
+                    rekt[i][j] = new Rect(0, 0, 0, 0);
 
                     dots[i][j].setBackgroundColor(Color.TRANSPARENT);
                 }
