@@ -6,11 +6,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.firebase.client.Firebase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class YesNo extends AppCompatActivity {
     final Context CONTEXT = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Firebase.setAndroidContext(this);
+        Firebase ref = new Firebase("https://incandescent-heat-6659.firebaseio.com");
+        final Firebase mFirebaseRef = ref.child("braille");
         final boolean success = getIntent().getBooleanExtra("success", false);
         final String msg = getIntent().getStringExtra("msg");
         super.onCreate(savedInstanceState);
@@ -26,7 +34,13 @@ public class YesNo extends AppCompatActivity {
         (findViewById(R.id.buttonYes)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 if (success) {
-                    new TTS(CONTEXT, false).execute("Chaitya get your ass over here");
+                    Map<String, String> push = new HashMap<String, String>();
+                    push.put("english", msg);
+                    mFirebaseRef.push().setValue(push);
+                    Intent myIntent = new Intent(YesNo.this,
+                            MyBrailleActivity.class);
+                    startActivity(myIntent);
+                    finish();
                 } else {
                     new TTS(CONTEXT, false).execute("Camera.");
                     Intent myIntent = new Intent(YesNo.this,

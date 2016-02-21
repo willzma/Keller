@@ -92,12 +92,6 @@ public class MyBrailleActivity extends ListActivity {
         mConnectedListener = mFirebaseRef.getRoot().child(".info/connected").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean connected = (Boolean) dataSnapshot.getValue();
-                if (connected) {
-                    Toast.makeText(MyBrailleActivity.this, "Connected to Firebase", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MyBrailleActivity.this, "Disconnected from Firebase", Toast.LENGTH_SHORT).show();
-                }
             }
 
             @Override
