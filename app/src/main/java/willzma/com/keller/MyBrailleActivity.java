@@ -1,6 +1,7 @@
 package willzma.com.keller;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Typeface;
@@ -13,6 +14,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +53,7 @@ public class MyBrailleActivity extends ListActivity {
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
 
     private static final String FIREBASE_URL = "https://incandescent-heat-6659.firebaseio.com/";
-
+    private final Context CONTEXT = this;
     private Firebase mFirebaseRef;
     private ValueEventListener mConnectedListener;
     private BrailleTextListAdapter mChatListAdapter;
@@ -86,6 +88,15 @@ public class MyBrailleActivity extends ListActivity {
         // Tell our list adapter that we only want 50 messages at a time
         mChatListAdapter = new BrailleTextListAdapter(mFirebaseRef.limit(50), this, R.layout.content_my_braille);
         listView.setAdapter(mChatListAdapter);
+        listView.setLongClickable(true);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int pos, long id) {
+                new TTS(CONTEXT, false).execute((((TextView)((RelativeLayout)(listView.getAdapter().getView(pos, null, listView))).findViewById(R.id.english))).getText().toString());
+                return true;
+            }
+        });
         mChatListAdapter.registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
@@ -118,7 +129,7 @@ public class MyBrailleActivity extends ListActivity {
         captainFabulous.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
+                new TTS(CONTEXT, false).execute("Speak a word or phrase to add it to your Braille Book.");
                 return false;
             }
         });
