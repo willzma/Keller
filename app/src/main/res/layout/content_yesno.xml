@@ -11,10 +11,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="willzma.com.keller.MainActivity"
-    tools:showIn="@layout/activity_main"
-    android:foregroundTint="#ffffff"
-    android:backgroundTint="@android:color/secondary_text_light"
-    android:background="#c94545">
+    tools:showIn="@layout/activity_main">
 
     <LinearLayout
         android:orientation="vertical"
@@ -27,21 +24,15 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Camera"
-            android:id="@+id/buttonCamera"
-            android:layout_weight="0.50"
-            android:elegantTextHeight="true"
-            android:drawableTintMode="multiply"
-            android:background="#618fcd"
-            android:gravity="start" />
+            android:text="Yes"
+            android:id="@+id/buttonYes"
+            android:layout_weight="0.50" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Braille"
-            android:id="@+id/buttonMyBraille"
+            android:text="No"
+            android:id="@+id/buttonNo"
             android:layout_weight="0.50" />
-          android:gravity="start"
-            android:background="#925da6" />
     </LinearLayout>
 </RelativeLayout>

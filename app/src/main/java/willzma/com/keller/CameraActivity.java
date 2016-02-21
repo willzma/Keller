@@ -1,5 +1,6 @@
 package willzma.com.keller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
@@ -22,16 +24,31 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.ContentHandler;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback {
+
+    private Context context = this;
 
     private SurfaceView preview;
     private SurfaceHolder previewHolder;
@@ -72,6 +89,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
 
             private Camera.PictureCallback getJpegCallback() {
+
                 Camera.PictureCallback jpeg = new Camera.PictureCallback() {
                     @Override
                     public void onPictureTaken(byte[] data, Camera camera) {
@@ -85,6 +103,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                         matrix.postRotate(90);
 
                         Bitmap bmp2 = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+                         bmp2 = Bitmap.createScaledBitmap(bmp2,700,1300,false);
 
                         ByteArrayOutputStream stm = new ByteArrayOutputStream();
                         bmp2.compress(Bitmap.CompressFormat.JPEG, 50, stm);
@@ -103,11 +122,66 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                                     .getAbsolutePath() + "/Iris/Iris" + (count) + ".jpg").getPath());
 
 
+                            CountDownLatch cdl = new CountDownLatch(1);
+                            FileUploadHelper fuh = new FileUploadHelper("http://uploads.im/api",f, cdl);
+                            fuh.execute();
+                            cdl.await();
+
+                            String url = "https://api.ocr.space/parse/image";
+                            final String url2 = fuh.getRes();
+
+                            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            response = response.substring(response.indexOf("ParsedText") + 13);
+                                            response = response.substring(0, response.lastIndexOf("ErrorDetails") - 108);
+                                            response = response.replace("\\r\\n", "");
+                                            response = response.replace("\\r\\","");
+                                            boolean success = true;
+                                            String deliver = "";
+                                            if(response.contains("CREATE YOUR OWN FORUM") ||
+                                                    (response.contains("malformed or too blurry"))) {
+                                                success = false;
+                                                deliver = "I can't understand what I'm looking at. Would you like to try again?";
+                                            } else {
+                                                deliver = response + ". Would you like to save that word in your Braille Book?";
+                                            }
+
+                                            new TTS(context, false).execute(deliver);
+                                            Intent myIntent = new Intent(CameraActivity.this,
+                                                    YesNo.class);
+                                            myIntent.putExtra("success",success);
+                                            myIntent.putExtra("msg", response);
+                                            startActivity(myIntent);
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            error.printStackTrace();
+                                        }
+                                    }
+                            ) {
+                                @Override
+                                protected Map<String, String> getParams()
+                                {
+                                    Map<String, String>  params = new HashMap<>();
+                                    // the POST parameters:
+                                    params.put("apikey", "helloworld");
+                                    params.put("language", "eng");
+                                    params.put("url", url2);
+                                    return params;
+                                }
+                            };
+                            Volley.newRequestQueue(context).add(postRequest);
 
                         } catch (IOException e) {
                             //do something about it
                         } catch (URISyntaxException e1) {
 
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
                     }
                 };
@@ -117,6 +191,10 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             public void onClick(View v) {
 
                 try {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Processing Image...",
+                            Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.AXIS_X_SHIFT, 0, 0);
+                    toast.show();
                     camera.takePicture(null, null, getJpegCallback());
 
                 } catch (Exception e) {
@@ -129,6 +207,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             }
         });
     }
+
 
     @Override
     public void onResume() {
