@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class LearnActivity extends AppCompatActivity {
 
@@ -16,20 +17,29 @@ public class LearnActivity extends AppCompatActivity {
     private Button[][] dots;
     private boolean[][] buttonsTouched;
 
+    private String braille;
+    private String text;
+    private int current;
+    private int next;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent in = getIntent();
-        //char vibraille = in.getCharExtra();
+
+        current = in.getIntExtra("current", 0);
+        next = in.getIntExtra("next", 0);
+        braille = in.getStringExtra("braille");
+        text = in.getStringExtra("english");
 
         vib = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         dots = new Button[3][2];
 
-        //boolean[][] enabledButtons = determineEnabledButtons(vibraille);
-       // negateMatrix(enabledButtons, buttonsTouched);
+        boolean[][] enabledButtons = determineEnabledButtons(text.charAt(current));
+        negateMatrix(enabledButtons, buttonsTouched);
 
-       // generateButtons(enabledButtons);
+        generateButtons(enabledButtons);
 
         setContentView(R.layout.activity_learn);
     }
@@ -71,10 +81,252 @@ public class LearnActivity extends AppCompatActivity {
         boolean[][] temp = new boolean[3][2];
 
         switch(brailleC) {
-
+            case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '\"': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+                toggleBoolean(temp, 6);
+            }break;case '#': {
+                toggleBoolean(temp, 2);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+                toggleBoolean(temp, 6);
+            }break;case '&': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;case '!': {
+                toggleBoolean(temp, 3);
+                toggleBoolean(temp, 4);
+                toggleBoolean(temp, 5);
+            }break;
         }
 
         return temp;
+    }
+
+    private void toggleBoolean(boolean[][] b, int index) {
+        int iterator = 0;
+        boolean done = false;
+
+        for (int i = 0; i < b.length && !done; i++) {
+            for (int j = 0; j < b[0].length && !done; j++) {
+                if (index == iterator) {
+                    b[i][j] = true;
+                    done = true;
+                }
+
+                iterator++;
+            }
+        }
     }
 
     private void negateMatrix(boolean[][] b1, boolean[][] b2) {
@@ -97,7 +349,13 @@ public class LearnActivity extends AppCompatActivity {
             buttonsTouched[i][j] = true;
 
             if (readyToGo()) {
+                Intent myIntent = new Intent(LearnActivity.this, LearnActivity.class);
 
+                myIntent.putExtra("braille", braille);
+                myIntent.putExtra("english", text);
+                myIntent.putExtra("current", braille.charAt(current + 1));
+                myIntent.putExtra("next", braille.charAt(next + 1));
+                startActivity(myIntent);
             }
 
             return true;

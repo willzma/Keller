@@ -19,8 +19,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
                 />
 
         <Button android:id="@+id/button01"
@@ -31,8 +31,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
             />
 
     </LinearLayout>
@@ -49,8 +49,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
             />
 
         <Button android:id="@+id/button11"
@@ -61,8 +61,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
             />
 
     </LinearLayout>
@@ -79,8 +79,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
             />
 
         <Button android:id="@+id/button21"
@@ -91,8 +91,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
             />
 
     </LinearLayout>

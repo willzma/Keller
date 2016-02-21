@@ -97,8 +97,8 @@ public class MyBrailleActivity extends ListActivity {
         if(!((((TextView) v.findViewById(R.id.english)).getText().toString()).trim() == "")) {
             myIntent.putExtra("braille", ((TextView)v.findViewById(R.id.ascii)).getText().toString());
             myIntent.putExtra("english", ((TextView) v.findViewById(R.id.english)).getText().toString());
-            myIntent.putExtra("current", ((TextView)v.findViewById(R.id.ascii)).getText().toString().charAt(0));
-            myIntent.putExtra("next", ((TextView)v.findViewById(R.id.ascii)).getText().toString().charAt(1));
+            myIntent.putExtra("current", 0);
+            myIntent.putExtra("next", 1);
             startActivity(myIntent);
         }
     }
