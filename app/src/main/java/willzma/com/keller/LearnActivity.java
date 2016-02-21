@@ -210,11 +210,19 @@ public class LearnActivity extends AppCompatActivity {
                     dots[i][j] = (Button) findViewById(resID);
 
                     int centerX = (int)(((2 * j) + 1) * width * 0.25);
-                    int centerY = (int)(((i + 1) * height * 0.2)) + 65;
+                    int centerY = (int)(((i + 1) * height * 0.25));
                     int radius = height / 15;
 
-                    rekt[i][j] = new Rect(centerX - radius, centerY - radius,
-                            centerX + radius, centerY + radius);
+                    if (i == 0) {
+                        rekt[i][j] = new Rect(centerX - radius, centerY - radius - (int)(0.09 * width),
+                                centerX + radius, centerY + radius - (int)(0.07 * width));
+                    } else if (i == 2) {
+                        rekt[i][j] = new Rect(centerX - radius, centerY - radius + (int)(0.11 * width),
+                                centerX + radius, centerY + radius + (int)(0.11 * width));
+                    } else {
+                        rekt[i][j] = new Rect(centerX - radius, centerY - radius + (int)(0.037 * width),
+                                centerX + radius, centerY + radius);
+                    }
                 } else {
                     dots[i][j] = (Button) findViewById(resID);
 
