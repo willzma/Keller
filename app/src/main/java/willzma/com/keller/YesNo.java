@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.firebase.client.Firebase;
 
@@ -16,6 +18,9 @@ public class YesNo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Firebase.setAndroidContext(this);
         Firebase ref = new Firebase("https://incandescent-heat-6659.firebaseio.com");
         final Firebase mFirebaseRef = ref.child("braille");
