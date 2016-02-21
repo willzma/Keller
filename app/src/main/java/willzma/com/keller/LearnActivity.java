@@ -3,12 +3,14 @@ package willzma.com.keller;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Arrays;
@@ -16,6 +18,7 @@ import java.util.Arrays;
 public class LearnActivity extends AppCompatActivity {
 
     private Vibrator vib;
+    private LinearLayout lexLuthor;
 
     private Button[][] dots;
     private boolean[][] buttonsTouched;
@@ -24,6 +27,8 @@ public class LearnActivity extends AppCompatActivity {
     private String text;
     private int current;
     private int next;
+
+    private Rect[][] rekt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class LearnActivity extends AppCompatActivity {
         braille = in.getStringExtra("braille");
         text = in.getStringExtra("english");
         buttonsTouched = new boolean[3][2];
+        rekt = new Rect[3][2];
 
         vib = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         dots = new Button[3][2];
@@ -46,6 +52,84 @@ public class LearnActivity extends AppCompatActivity {
         setContentView(R.layout.activity_learn);
 
         generateButtons(enabledButtons);
+
+        lexLuthor = (LinearLayout) findViewById(R.id.lexLuthor);
+
+        lexLuthor.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE: {
+                        //String s = getResources().getResourceName(v.getId());
+                        //int i = Integer.parseInt(s.substring(s.length() - 2, s.length() - 1));
+                        //int j = Integer.parseInt(s.substring(s.length() - 1, s.length()));
+
+                        System.out.println("meme supreme");
+
+                        System.out.println(event.getX() + " and " + event.getY());
+
+                        if (rektContains(v.getLeft() + (int) event.getX(), v.getTop() + (int) event.getY())){
+                            vibrate(v);
+
+                            int x = v.getLeft() + (int) event.getX();
+                            int y = v.getTop() + (int) event.getY();
+
+                            int[] temp = indices(x, y);
+
+                            buttonsTouched[temp[0]][temp[1]] = true;
+
+                            if (readyToGo()) {
+                                Intent myIntent = new Intent(LearnActivity.this, LearnActivity.class);
+
+                                myIntent.putExtra("braille", braille);
+                                myIntent.putExtra("english", text);
+                                myIntent.putExtra("current", braille.charAt(current + 1));
+                                myIntent.putExtra("next", braille.charAt(next + 1));
+                                startActivity(myIntent);
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    private boolean rektContains(int x, int y) {
+        for (int i = 0; i < rekt.length; i++) {
+            for (int j = 0; j < rekt[0].length; j++) {
+                if (rekt[i][j].contains(x,  y)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private int[] indices(int x, int y) {
+        for (int i = 0; i < rekt.length; i++) {
+            for (int j = 0; j < rekt[0].length; j++) {
+                if (rekt[i][j].contains(x,  y)) {
+                    int temp[] = {i, j};
+                    return temp;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private Button buttWoman(int x, int y) {
+        for (int i = 0; i < rekt.length; i++) {
+            for (int j = 0; j < rekt[0].length; j++) {
+                if (rekt[i][j].contains(x,  y)) {
+                    return dots[i][j];
+                }
+            }
+        }
+
+        return null;
     }
 
     private boolean readyToGo() {
@@ -61,7 +145,7 @@ public class LearnActivity extends AppCompatActivity {
     }
 
     private void vibrate(View v) {
-        vib.vibrate(200);
+        vib.vibrate(100);
     }
 
     private void generateButtons(boolean[][] bigButts) {
@@ -72,30 +156,46 @@ public class LearnActivity extends AppCompatActivity {
 
                 if (bigButts[i][j]) {
                     dots[i][j] = (Button) findViewById(resID);
-                    dots[i][j].setOnTouchListener(new View.OnTouchListener() {
+
+                    rekt[i][j] = new Rect(dots[i][j].getLeft(), dots[i][j].getTop(),
+                            dots[i][j].getRight(), dots[i][j].getBottom());
+
+                    /*dots[i][j].setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View v, MotionEvent event) {
-                            vibrate(v);
 
-                            String s = getResources().getResourceName(v.getId());
-                            int i = Integer.parseInt(s.substring(s.length() - 2, s.length() - 1));
-                            int j = Integer.parseInt(s.substring(s.length() - 1, s.length()));
+                            switch(event.getAction()) {
+                                case MotionEvent.ACTION_UP: {
 
-                            buttonsTouched[i][j] = true;
+                                }break;case MotionEvent.ACTION_DOWN: {
+                                    rect = new Rect(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
+                                }break;case MotionEvent.ACTION_MOVE: {
+                                    String s = getResources().getResourceName(v.getId());
+                                    int i = Integer.parseInt(s.substring(s.length() - 2, s.length() - 1));
+                                    int j = Integer.parseInt(s.substring(s.length() - 1, s.length()));
 
-                            if (readyToGo()) {
-                                Intent myIntent = new Intent(LearnActivity.this, LearnActivity.class);
+                                    if(!rect.contains(v.getLeft() + (int) event.getX(), v.getTop() + (int) event.getY())){
+                                        vibrate(v);
 
-                                myIntent.putExtra("braille", braille);
-                                myIntent.putExtra("english", text);
-                                myIntent.putExtra("current", braille.charAt(current + 1));
-                                myIntent.putExtra("next", braille.charAt(next + 1));
-                                startActivity(myIntent);
+                                        buttonsTouched[i][j] = true;
+
+                                        if (readyToGo()) {
+                                            Intent myIntent = new Intent(LearnActivity.this, LearnActivity.class);
+
+                                            myIntent.putExtra("braille", braille);
+                                            myIntent.putExtra("english", text);
+                                            myIntent.putExtra("current", braille.charAt(current + 1));
+                                            myIntent.putExtra("next", braille.charAt(next + 1));
+                                            startActivity(myIntent);
+                                        }
+
+                                    }
+                                }
                             }
 
                             return true;
                         }
-                    });
+                    });*/
                 } else {
                     dots[i][j] = (Button) findViewById(resID);
                     dots[i][j].setBackgroundColor(Color.TRANSPARENT);

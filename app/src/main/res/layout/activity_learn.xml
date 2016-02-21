@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="willzma.com.keller.LearnActivity"
+    android:id="@+id/lexLuthor"
     android:orientation="vertical">
 
     <LinearLayout android:layout_height="0dp"
