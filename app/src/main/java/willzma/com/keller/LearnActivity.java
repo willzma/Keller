@@ -164,17 +164,6 @@ public class LearnActivity extends AppCompatActivity {
         return null;
     }
 
-    private Button buttWoman(int x, int y) {
-        for (int i = 0; i < rekt.length; i++) {
-            for (int j = 0; j < rekt[0].length; j++) {
-                if (rekt[i][j].contains(x,  y)) {
-                    return dots[i][j];
-                }
-            }
-        }
-
-        return null;
-    }
 
     private boolean readyToGo() {
         for (int i = 0; i < buttonsTouched.length; i++) {

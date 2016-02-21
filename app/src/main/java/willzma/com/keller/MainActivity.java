@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
-        (findViewById(R.id.buttonCamera)).setOnLongClickListener(new View.OnLongClickListener() {
+        (findViewById(R.id.buttonMyBraille)).setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View arg0) {
-                new TTS(CONTEXT, false).execute("My Braille");
+                new TTS(CONTEXT, false).execute("Braille Book");
                 return true;
             }
         });

@@ -27,20 +27,25 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Camera"
+            android:text="Camera (OCR)"
             android:id="@+id/buttonCamera"
             android:layout_weight="0.50"
             android:elegantTextHeight="true"
             android:drawableTintMode="multiply"
             android:background="#618fcd"
-            android:gravity="start" />
+            android:gravity="center"
+            android:textColor="#f8f8ff"
+            android:textSize="50dp" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Braille"
+            android:text="Braille Book"
             android:id="@+id/buttonMyBraille"
-            android:layout_weight="0.50" />
+            android:layout_weight="0.50"
+            android:background="#845692"
+            android:textColor="#f8f8ff"
+            android:textSize="50dp" />
           android:gravity="start"
             android:background="#925da6" />
     </LinearLayout>
