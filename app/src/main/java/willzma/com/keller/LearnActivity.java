@@ -2,6 +2,7 @@ package willzma.com.keller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -37,6 +38,8 @@ public class LearnActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         Intent in = getIntent();
 
         current = in.getIntExtra("current", 0);
@@ -70,9 +73,35 @@ public class LearnActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 System.out.println(event.getAction());
                 switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_UP: {
+                        if (readyToGo()) {
+
+                            if (current == (braille.length() - 1)) {
+                                Intent myIntent = new Intent(LearnActivity.this, MyBrailleActivity.class);
+
+                                System.out.println("should be doing this");
+
+                                startActivity(myIntent);
+
+                                finish();
+                            } else {
+                                Intent myIntent = new Intent(LearnActivity.this, LearnActivity.class);
+
+                                System.out.println("should not be doing this");
+
+                                myIntent.putExtra("braille", braille);
+                                myIntent.putExtra("english", text);
+                                myIntent.putExtra("current", current + 1);
+                                //myIntent.putExtra("next", braille.charAt(next + 1));
+                                startActivity(myIntent);
+
+                                finish();
+                            }
+                        }
+                    }break;
+                    case MotionEvent.ACTION_DOWN: {
                         System.out.println("yes.");
-                        break;
+                    }break;
                     case MotionEvent.ACTION_MOVE: {
                         //String s = getResources().getResourceName(v.getId());
                         //int i = Integer.parseInt(s.substring(s.length() - 2, s.length() - 1));
@@ -100,31 +129,6 @@ public class LearnActivity extends AppCompatActivity {
                             int[] temp = indices(x, y);
 
                             buttonsTouched[temp[0]][temp[1]] = true;
-
-                            if (readyToGo()) {
-
-                                if (current == (braille.length() - 1)) {
-                                    Intent myIntent = new Intent(LearnActivity.this, MyBrailleActivity.class);
-
-                                    System.out.println("should be doing this");
-
-                                    startActivity(myIntent);
-
-                                    finish();
-                                } else {
-                                    Intent myIntent = new Intent(LearnActivity.this, LearnActivity.class);
-
-                                    System.out.println("should not be doing this");
-
-                                    myIntent.putExtra("braille", braille);
-                                    myIntent.putExtra("english", text);
-                                    myIntent.putExtra("current", current + 1);
-                                    //myIntent.putExtra("next", braille.charAt(next + 1));
-                                    startActivity(myIntent);
-
-                                    finish();
-                                }
-                            }
                         }
                     }
                 }
