@@ -61,6 +61,8 @@ public class MyBrailleActivity extends ListActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_braille);
+        Firebase.setAndroidContext(this);
+
 
         // Make sure we have a mUsername
 

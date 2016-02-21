@@ -58,17 +58,30 @@ public class LearnActivity extends AppCompatActivity {
         lexLuthor.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                System.out.println(event.getAction());
                 switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        System.out.println("yes.");
+                        break;
                     case MotionEvent.ACTION_MOVE: {
                         //String s = getResources().getResourceName(v.getId());
                         //int i = Integer.parseInt(s.substring(s.length() - 2, s.length() - 1));
                         //int j = Integer.parseInt(s.substring(s.length() - 1, s.length()));
 
-                        System.out.println("meme supreme");
+                        //System.out.println("meme supreme");
 
-                        System.out.println(event.getX() + " and " + event.getY());
+                        //System.out.println(event.getX() + " and " + event.getY());
+
+                        for (int i = 0; i < rekt.length; i++) {
+                            for (int j = 0; j < rekt[0].length; j++) {
+                                System.out.println(rekt[i][j].toString());
+                            }
+                        }
 
                         if (rektContains(v.getLeft() + (int) event.getX(), v.getTop() + (int) event.getY())){
+
+                            System.out.println("Coldstone memery");
+
                             vibrate(v);
 
                             int x = v.getLeft() + (int) event.getX();
@@ -90,7 +103,12 @@ public class LearnActivity extends AppCompatActivity {
                         }
                     }
                 }
-                return false;
+                if(event.getAction() != MotionEvent.ACTION_DOWN) {
+                    return false;
+                } else {
+                    return true;
+                }
+
             }
         });
     }
@@ -99,6 +117,7 @@ public class LearnActivity extends AppCompatActivity {
         for (int i = 0; i < rekt.length; i++) {
             for (int j = 0; j < rekt[0].length; j++) {
                 if (rekt[i][j].contains(x,  y)) {
+                    System.out.println(x + " and " + y);
                     return true;
                 }
             }
@@ -157,6 +176,9 @@ public class LearnActivity extends AppCompatActivity {
                 if (bigButts[i][j]) {
                     dots[i][j] = (Button) findViewById(resID);
 
+                    System.out.println(dots[i][j].getLeft() + " and " + dots[i][j].getTop() +
+                            " and " + dots[i][j].getRight() + " and " + dots[i][j].getBottom());
+
                     rekt[i][j] = new Rect(dots[i][j].getLeft(), dots[i][j].getTop(),
                             dots[i][j].getRight(), dots[i][j].getBottom());
 
@@ -198,6 +220,10 @@ public class LearnActivity extends AppCompatActivity {
                     });*/
                 } else {
                     dots[i][j] = (Button) findViewById(resID);
+
+                    rekt[i][j] = new Rect(dots[i][j].getLeft(), dots[i][j].getTop(),
+                            dots[i][j].getRight(), dots[i][j].getBottom());
+
                     dots[i][j].setBackgroundColor(Color.TRANSPARENT);
                 }
             }
