@@ -25,16 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.firebase:firebase-client-android:2.5.1+'
-    compile files('src/main/res/libs/commons-codec-1.9.jar')
-    compile files('src/main/res/libs/commons-logging-1.2.jar')
-    compile files('src/main/res/libs/fluent-hc-4.5.1.jar')
-    compile files('src/main/res/libs/httpclient-4.5.1.jar')
-    compile files('src/main/res/libs/httpclient-cache-4.5.1.jar')
-    compile files('src/main/res/libs/httpclient-win-4.5.1.jar')
-    compile files('src/main/res/libs/httpcore-4.4.3.jar')
-    compile files('src/main/res/libs/httpmime-4.5.1.jar')
-    compile files('src/main/res/libs/jna-4.1.0.jar')
-    compile files('src/main/res/libs/jna-platform-4.1.0.jar')
+
 }
 android {
     packagingOptions {
