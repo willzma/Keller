@@ -571,4 +571,13 @@ public class LearnActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent in = new Intent(LearnActivity.this, MyBrailleActivity.class);
+
+        startActivity(in);
+
+        finish();
+    }
 }

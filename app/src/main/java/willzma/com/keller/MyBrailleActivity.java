@@ -78,7 +78,7 @@ public class MyBrailleActivity extends ListActivity {
         // Setup our view and list adapter. Ensure it scrolls to the bottom as data changes
         final ListView listView = getListView();
         // Tell our list adapter that we only want 50 messages at a time
-        mChatListAdapter = new BrailleTextListAdapter(mFirebaseRef.limit(50), this, R.layout.activity_my_braille);
+        mChatListAdapter = new BrailleTextListAdapter(mFirebaseRef.limit(50), this, R.layout.content_my_braille);
         listView.setAdapter(mChatListAdapter);
         mChatListAdapter.registerDataSetObserver(new DataSetObserver() {
             @Override
@@ -171,5 +171,14 @@ public class MyBrailleActivity extends ListActivity {
     }
     void showToastMessage(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent in = new Intent(MyBrailleActivity.this, MainActivity.class);
+
+        startActivity(in);
+
+        finish();
     }
 }
