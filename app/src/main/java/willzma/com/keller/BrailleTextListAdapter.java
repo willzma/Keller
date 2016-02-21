@@ -43,17 +43,17 @@ public class BrailleTextListAdapter extends FirebaseListAdapter<BrailleText> {
             if(Character.isDigit(english.charAt(i))) {
                 if(!isNum) {
                     isNum = true;
-                    result += "#"+english.charAt(i);
+                    result += "# "+english.charAt(i) + " ";
                 } else {
-                    result+=english.charAt(i);
+                    result+=english.charAt(i)+ " ";
                 }
             } else {
                 if(isNum) {
                     isNum = false;
                     if(english.charAt(i) == ' ') {
-                        result+= ";"+english.charAt(i);
+                        result+= "; "+english.charAt(i) + " ";
                     } else {
-                        result+= "; "+english.charAt(i);
+                        result+= "; "+english.charAt(i) + " ";
                     }
                 } else {
                     result+=english.charAt(i);
