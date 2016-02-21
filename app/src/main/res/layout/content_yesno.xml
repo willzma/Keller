@@ -10,8 +10,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="willzma.com.keller.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context="willzma.com.keller.YesNo"
+    tools:showIn="@layout/activity_yes_no"
+    android:background="#333">
 
     <LinearLayout
         android:orientation="vertical"
@@ -26,13 +27,26 @@
             android:layout_height="wrap_content"
             android:text="Yes"
             android:id="@+id/buttonYes"
-            android:layout_weight="0.50" />
+            android:layout_weight="0.50"
+            android:elegantTextHeight="true"
+            android:drawableTintMode="multiply"
+            android:background="#2c8c51"
+            android:gravity="center"
+            android:textColor="#f8f8ff"
+            android:textSize="50dp" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="No"
             android:id="@+id/buttonNo"
-            android:layout_weight="0.50" />
+            android:layout_weight="0.50"
+            android:elegantTextHeight="true"
+            android:drawableTintMode="multiply"
+            android:background="#9a2850"
+            android:gravity="center"
+            android:textColor="#f8f8ff"
+            android:textSize="50dp" />
+
     </LinearLayout>
 </RelativeLayout>
