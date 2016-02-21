@@ -16,7 +16,6 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_btn_speak_now"
-        app:layout_anchorGravity="bottom|right|end"
-        android:onClick="speak"/>
+        app:layout_anchorGravity="bottom|right|end"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -56,6 +56,8 @@ public class MyBrailleActivity extends ListActivity {
     private ValueEventListener mConnectedListener;
     private BrailleTextListAdapter mChatListAdapter;
 
+    private FloatingActionButton captainFabulous;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -64,6 +66,8 @@ public class MyBrailleActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_braille);
         Firebase.setAndroidContext(this);
+
+        captainFabulous = (FloatingActionButton) findViewById(R.id.voice);
 
 
         // Make sure we have a mUsername
@@ -99,6 +103,23 @@ public class MyBrailleActivity extends ListActivity {
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 // No-op
+            }
+        });
+
+        
+
+        captainFabulous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speak(v);
+            }
+        });
+
+        captainFabulous.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                return false;
             }
         });
     }
